@@ -1,0 +1,33 @@
+<erl>
+out(Req) ->
+	{content, "text/html; charset=utf-8", ""}.
+</erl>
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="/css/style.css.old" />
+	<link rel="stylesheet" type="text/css" href="/admin/style.css" />
+	<script type="text/javascript" src="/js/jquery-1.10.2.js"></script>
+	<script type="text/javascript" src="/js/display.js"></script>
+	<script type="text/javascript" src="/admin/admin.js"></script>
+</head>
+<body onload='equalize_height()' onresize='equalize_height()'>
+	<div id='wrapper'>
+		<div id='leftwrapper'>
+			<div id='list'>
+				<p><a href='#' onclick='edit_song("")'>ADD NEW SONG</a></p>
+				<p>EDIT:</p>
+				<erl>
+				out(Req) -> 
+					{html, song:html_list("<p><a href='#' onclick='edit_song(\"~s\")'>~s</a></p>")}.
+				</erl>
+			</div>
+			<div id='footer'>Denys Knertser &middot; 2013</div>
+		</div>
+		<div id='text'>
+			<erl>
+			out(Req) -> {yssi, "/admin/edit.yaws"}.
+			</erl>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<erl>
+out(Req) ->
+	Result = case {postvar(Req, "op"), postvar(Req, "a"), postvar(Req, "t"), postvar(Req, "x")} of
+		{{ok, "delete"}, {ok, Author}, {ok, Title}, _Text} -> 
+			[f("Deleting '~s'...", [song:getTitle(Author, Title)]),
+			songdets:deleteSong(Author, Title),
+			""];
+		{{ok, "save"}, {ok, Author}, {ok, Title}, {ok, Text}} ->
+			[f("Saving '~s'...", [song:getTitle(Author, Title)]),
+			songdets:saveText(Author, Title, Text),
+			f(	"<br />You might need to delete the original song if you changed the author / the title of the song<br /><br />"
+				"<a href='#' onclick='load_song(\"~s\")'>show</a> song"
+			,[song:getLink(Author, Title)]) ];
+		_ -> ["Debug: op", queryvar(Req, "op")]
+	end,
+	{html, 
+	f("<h3>~s<br />"
+	"~s<br />"
+	"~s<br />"
+	"<a href=''>reload</a> page to refresh list</h3>"
+	, Result) % Result is itself a list of three strings, indeed
+	}.
+</erl>

@@ -1,0 +1,56 @@
+<erl>
+out(Req) ->
+	{content, "text/html; charset=utf-8", ""}.
+</erl>
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Denys' song database</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
+	<link rel="stylesheet" type="text/css" href="/css/bootstrap-theme.min.css" />
+	<link rel="stylesheet" type="text/css" href="/css/style.css" />
+	<script type="text/javascript" src="/js/jquery-1.10.2.js"></script>
+	<script type="text/javascript" src="/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="/js/raphael.js"></script>
+	<script type="text/javascript" src="/js/jtab.js"></script>
+	<script type="text/javascript" src="/js/display.js"></script>
+</head>
+<body>
+	<div id='outwrapper' class='container'>
+		<div class='navbar navbar-default'>
+			<div class='container'>
+				<a class='navbar-brand' href=''>Denys' song database</a>
+				<div class='nav-collapse'>
+					<ul class='nav navbar-nav pull-right'>
+						<li id='showchordsbtn' style="display:none"><a href='#' onclick='toggle_chords()'>Показать аппликатуры</a></li>
+						<input id='openchords' type='hidden' value='0' />
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div id='inwrapper'>
+			<div id='list' class='col-lg-4 col-md-4 col-sm-4 col-xs-4 list-group'>
+				<ul>
+					<erl>
+					out(Req) -> 
+						{html, song:html_list("<a class='list-group-item' href='#' onclick='load_song(\"~s\")'>~s</a>")}.
+					</erl>
+				</ul>
+			</div>
+			<div id='content' class='col-lg-8 col-md-8 col-sm-8 col-xs-8'>
+				<erl>
+				out(Req) -> {yssi, "song.yaws"}.
+				</erl>
+			</div>
+		</div>
+		<div id='footer'>
+			<div class='container'>
+				<div class='text-muted credit'>
+					Denys Knertser &middot; 2013
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

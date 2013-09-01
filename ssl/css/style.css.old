@@ -1,0 +1,133 @@
+body {
+	margin: 0;
+	padding: 0;
+}
+
+div#wrapper {
+	width: 800px;
+	height: auto;
+	margin: 2px auto;
+	padding: 0;
+	border: none;
+}
+
+div#list, div#footer, div#text {
+	float:left;
+	border: 1px solid #AAA;
+	border-radius: 10px;
+	margin: 2px;
+	font-family: "Trebuchet MS", Helvetica, sans-serif;
+	color: #333;
+}
+
+div#leftwrapper {
+	width: 240px;
+	float:left;
+	border: none;
+	margin: 0;
+	padding: 0;
+}
+
+div#list {
+	width: 224px;
+	height: 570px;
+	padding: 0 5px;
+	font-size: 13pt;
+	font-variant: small-caps;
+	overflow: auto;
+	overflow-y: scroll;
+}
+
+div#listwrapper {
+	border: none;
+	margin: 0;
+	padding: 0;
+}
+
+.multicolumn {
+	column-count: 3;
+	-moz-column-count: 3;
+	-webkit-column-count: 3;
+}
+
+ul {
+	list-style: none outside;
+	margin: 0;
+	padding:0;
+}
+
+li {
+	margin: 3px 1px;
+	padding: 3px 1px;
+	-webkit-column-break-inside: avoid;
+	break-inside: avoid-column;
+}
+
+div#text {
+	width: 534px;
+	padding: 0 10px;
+	height: 600px;
+	overflow: auto;
+}
+
+div#content {
+	float: left;
+	clear: both;
+}
+
+div#footer {
+	width: 234px;
+	height: 18px;
+	padding: 3px 0;
+	text-align: center;
+	font-size: 10pt;
+	color: #777;
+}
+
+div#chords {
+	float: left;
+	clear: both;
+	display: none;
+}
+
+div.jtab {
+	float: left;
+}
+
+h2 {
+	font-family: inherit;
+	font-size: 20pt;
+	font-variant: small-caps;
+	color: #3d4950;
+	margin-bottom: 10px;
+}
+
+pre {
+	font-family: "Lucida Console", Monaco, monospace;
+	font-size: 10pt;
+	float: left;
+	clear: both;
+}
+
+a {
+	text-decoration: none;
+	color: #3d4950;
+}
+
+a:hover {
+	color: #f36c3d;
+	cursor: pointer;
+}
+
+#togglechords {
+	font-size: 12pt;
+	font-variant: small-caps;
+	border-bottom: 1px #3d4950 dotted;
+	margin-left: 25px;
+}
+
+#content {
+	border: none;
+	margin: none;
+	padding: none;
+}
