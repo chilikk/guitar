@@ -1,0 +1,22 @@
+<erl>
+format_chords(ChordList) -> 
+format_chords(ChordList, "").
+
+format_chords([], Result) ->
+Result;
+
+format_chords([Chord | ChordList], Result) ->
+format_chords(ChordList, f("~s<div class='jtab chordonly'>~s</div>", [Result, unicode:characters_to_binary(Chord)])).
+
+out(Req) -> {html, case {queryvar(Req, "a"), queryvar(Req, "t")} of
+	{{ok, Author}, {ok, Title}} -> 
+		{FullTitle, Text, ChordList} = song:show(Author, Title),
+		Chords = case ChordList of
+			[] -> "";
+			_ -> f("<div id='chords'>~s</div>", [format_chords(ChordList)])
+		end,
+		f("<h3>~s</h3>~s
+		<pre>~s</pre>",[FullTitle, Chords, Text]);
+	_ -> ""
+end}.
+</erl>

@@ -1,0 +1,40 @@
+<erl>
+out(Req) ->
+	{content, "text/html; charset=utf-8", ""}.
+</erl>
+<html>
+<head>
+	<title>Denys' song database</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
+	<link rel="stylesheet" type="text/css" href="/css/style.css" />
+	<script type="text/javascript" src="/js/jquery.js"></script>
+	<script type="text/javascript" src="/js/raphael.js"></script>
+	<script type="text/javascript" src="/js/jtab.js"></script>
+	<script type="text/javascript" src="/js/display.js"></script>
+</head>
+<body onload='equalize_height(); check_text_empty();' onresize='equalize_height()'>
+	<div id='wrapper'>
+		<div id='leftwrapper'>
+			<div id='list'>
+				<div id='listwrapper'>
+					<ul>
+						<erl>
+						out(Req) -> 
+							{html, song:html_list("<li><a href='#' onclick='load_song(\"~s\")'>~s</a>")}.
+						</erl>
+					</ul>
+				</div>
+			</div>
+			<div id='footer'>Denys Knertser &middot; 2013</div>
+		</div>
+		<div id='text'>
+			<div id='content'>
+				<erl>
+				out(Req) -> {yssi, "song.yaws"}.
+				</erl>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
