@@ -1,23 +1,45 @@
 <erl>
+-record(opResult, {operation, success, info=""}).
+
+delete_song(Author, Title) ->
+	#opResult{operation = lists:flatten(f("Deleting '~s'...", [song:getTitle(Author, Title)])),
+		  success = songdets:deleteSong(Author, Title)}.
+	
+
+save_song(Author, Title, Text) ->
+	#opResult{operation = lists:flatten(f("Saving '~s'...", [song:getTitle(Author, Title)])),
+		  success = songdets:saveText(Author, Title, Text),
+		  info = "You might need to delete the original song if you changed the author / the title of the song.<br />"}.
+
+error(Operation, ErrorMessage) ->
+	#opResult {operation=Operation,	success=ErrorMessage}.
+
+
 out(Req) ->
 	Result = case {postvar(Req, "op"), postvar(Req, "a"), postvar(Req, "t"), postvar(Req, "x")} of
 		{{ok, "delete"}, {ok, Author}, {ok, Title}, _Text} -> 
-			[f("Deleting '~s'...", [song:getTitle(Author, Title)]),
-			songdets:deleteSong(Author, Title),
-			""];
+			delete_song(Author, Title);
+		{{ok, "delete"}, _Author, {ok, Title}, _Text} ->
+			delete_song(undefined, Title);
 		{{ok, "save"}, {ok, Author}, {ok, Title}, {ok, Text}} ->
-			[f("Saving '~s'...", [song:getTitle(Author, Title)]),
-			songdets:saveText(Author, Title, Text),
-			f(	"<br />You might need to delete the original song if you changed the author / the title of the song<br /><br />"
-				"<a href='#' onclick='load_song(\"~s\")'>show</a> song"
-			,[song:getLink(Author, Title)]) ];
-		_ -> ["Debug: op", queryvar(Req, "op")]
+			save_song(Author, Title, Text);
+		{{ok, "save"}, _Author, {ok, Title}, {ok, Text}} ->
+			save_song(unknown, Title, Text);
+		{{ok, ReqOperation}, _Author, {TitleStatus, _}, {TextStatus, _}} ->
+			error(ReqOperation, f("title: ~s, text: ~s",[TitleStatus, TextStatus]));
+		{{ok, ReqOperation}, _, _, _} ->	
+			error(ReqOperation, unknown);
+		_ -> error(unknown, unknown)
 	end,
 	{html, 
-	f("<h3>~s<br />"
-	"~s<br />"
-	"~s<br />"
-	"<a href=''>reload</a> page to refresh list</h3>"
-	, Result) % Result is itself a list of three strings, indeed
+	case Result of
+		#opResult{operation = Operation, success=ok, info = Info} -> 
+			f("<div class='alert alert-success'>~s ~s</div>"
+			  "<div class='alert alert-info'>~s"
+			  "<a href=''>Reload</a> the page to refresh list</div>",
+			  [Operation, ok, Info]);
+		#opResult{operation = Operation, success = Success} ->
+			f("<div class='alert alert-danger'>Operation ~s error: ~s</div>", [Operation, Success])
+	end
 	}.
 </erl>

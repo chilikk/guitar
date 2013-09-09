@@ -1,19 +1,19 @@
 function edit_song(urlGetQuery) {
 	$.get("/admin/edit.yaws"+urlGetQuery,
 	function(msg) {
-		$('#text').html(msg);
+		$('#content').html(msg);
                 textarea = $('#edittext');
                 textarea.height(1);
                 textarea.height(textarea[0].scrollHeight+4);
 	}
 	);
-	$('#text').html("<center><h2>Loading...</h2></center>");
+	$('#content').html("<center><h2>Loading...</h2></center>");
 }
 
 function new_song() {
 	$.get("/admin/edit.yaws",
 		function(msg) {
-			$('#text').html(msg);
+			$('#content').html(msg);
 			textarea = $('#edittext');
 			textarea.height(1);
 			textarea.height(textarea[0].scrollHeight+4);

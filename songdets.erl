@@ -34,7 +34,9 @@ loop() ->
 	end.
 
 toBinary(undefined) ->
-	undefined;
+	unknown;
+toBinary(unknown) ->
+	unknown;
 toBinary("") ->
 	unknown;
 toBinary(<<>>) ->
