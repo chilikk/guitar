@@ -15,8 +15,10 @@ out(Req) -> {html, case {queryvar(Req, "a"), queryvar(Req, "t")} of
 			[] -> "";
 			_ -> f("<div id='chords'>~s</div>", [format_chords(ChordList)])
 		end,
-		f("<h3>~s</h3>~s
-		<pre>~s</pre>",[FullTitle, Chords, Text]);
+		f("<button class='btn btn-default' id='editbtn' onclick='window.location=\"/admin\"'>edit song</button>"
+		  "<h3>~s</h3>"
+		  "~s<pre>~s</pre>"
+		  ,[FullTitle, Chords, Text]);
 	_ -> ""
 end}.
 </erl>

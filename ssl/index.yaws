@@ -25,6 +25,7 @@ out(Req) ->
 					<ul class='nav navbar-nav pull-right'>
 						<li id='showchordsbtn' style="display:none"><a href='#' onclick='toggle_chords()'>Показать аппликатуры</a></li>
 						<input id='openchords' type='hidden' value='0' />
+						<input id='activesong' type='hidden' value='' />
 					</ul>
 				</div>
 			</div>
