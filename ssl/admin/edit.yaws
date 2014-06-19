@@ -1,28 +1,33 @@
 <erl>
-out(Req) -> {DisplayAuthor, DisplayTitle, DisplayText} = case {queryvar(Req, "a"), queryvar(Req, "t")} of
-	{{ok, Author}, {ok, Title}} -> 
-		Text = song:getText(Author, Title),
-		{Author, Title, Text};
-	{_Author, {ok, Title}} ->
-		Text = song:getText(undefined, Title),
-		{"", Title, Text};
-	_ -> {"Author", "Title", "Text"}
-	end,
-	Controls = "<div class='controls clearfix'>"
-		   "<button class='btn btn-primary' type=button onclick='save_song()'>save</button>&nbsp;"
-		   "<button class='btn btn-danger' type=button onclick='delete_song()'>delete</button>"
-		   "</div>",
-	{html,
-	f( 	"~s"
-		"<div id='opresult' class='clearfix'></div>"
-		"<div id='text' class='clearfix'>"
-		"<h3 type=text id='editauthor' contentEditable>~s</h3>"
-		"<h3 id='editdivider'>&nbsp;::&nbsp;</h3>"
-		"<h3 type=text id='edittitle' contentEditable>~s</h3>"
-		"<br />"
-		"<textarea id='edittext'>~s</textarea>"
-		"</div>"
-		"~s"
-	,[Controls, DisplayAuthor, DisplayTitle, DisplayText, Controls])
-	}.
+out(Req) ->
+    {DisplayAuthor, DisplayTitle, DisplayText} =
+        case {queryvar(Req, "a"), queryvar(Req, "t")} of
+            {{ok, Author}, {ok, Title}} -> 
+                Text = song:get_text(Author, Title),
+                {Author, Title, Text};
+            {_Author, {ok, Title}} ->
+                Text = song:get_text(undefined, Title),
+                {"", Title, Text};
+            _ -> {"Author", "Title", "Text"}
+        end,
+    Controls =
+        "<div class='controls clearfix'>"
+        "<button class='btn btn-primary' type=button "
+            "onclick='save_song()'>save</button>&nbsp;"
+        "<button class='btn btn-danger' type=button "
+            "onclick='delete_song()'>delete</button>"
+        "</div>",
+    {html,
+    f(  "~s"
+        "<div id='opresult' class='clearfix'></div>"
+        "<div id='text' class='clearfix'>"
+        "<h3 type=text id='editauthor' contentEditable>~s</h3>"
+        "<h3 id='editdivider'>&nbsp;::&nbsp;</h3>"
+        "<h3 type=text id='edittitle' contentEditable>~s</h3>"
+        "<br />"
+        "<textarea id='edittext'>~s</textarea>"
+        "</div>"
+        "~s"
+    ,[Controls, DisplayAuthor, DisplayTitle, DisplayText, Controls])
+    }.
 </erl>

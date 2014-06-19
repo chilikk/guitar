@@ -1,0 +1,8 @@
+{application, backend,
+  [{description,  "Song backend"},
+   {vsn,          "1.0"},
+   {modules,      []},
+   {registered,   [db]},
+   {applications, [kernel, stdlib]},
+   {mod,          {db_sup, []}}
+  ]}.

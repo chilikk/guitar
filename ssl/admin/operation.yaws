@@ -2,13 +2,13 @@
 -record(opResult, {operation, success, info=""}).
 
 delete_song(Author, Title) ->
-	#opResult{operation = lists:flatten(f("Deleting '~s'...", [song:getTitle(Author, Title)])),
-		  success = songdets:deleteSong(Author, Title)}.
+	#opResult{operation = lists:flatten(f("Deleting '~s'...", [song:get_title(Author, Title)])),
+		  success = song:delete(Author, Title)}.
 	
 
 save_song(Author, Title, Text) ->
-	#opResult{operation = lists:flatten(f("Saving '~s'...", [song:getTitle(Author, Title)])),
-		  success = songdets:saveText(Author, Title, Text),
+	#opResult{operation = lists:flatten(f("Saving '~s'...", [song:get_title(Author, Title)])),
+		  success = song:save(Author, Title, Text),
 		  info = "You might need to delete the original song if you changed the author / the title of the song.<br />"}.
 
 error(Operation, ErrorMessage) ->
