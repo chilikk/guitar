@@ -3,6 +3,7 @@
 -behaviour(gen_server).
 
 -include("song.hrl").
+-include("db.hrl").
 
 -export([init/1, terminate/2,
          handle_call/3, handle_info/2, handle_cast/2,

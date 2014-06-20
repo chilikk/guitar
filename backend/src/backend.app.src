@@ -2,7 +2,7 @@
   [{description,  "Song backend"},
    {vsn,          "1.0"},
    {modules,      []},
-   {registered,   [db]},
+   {registered,   [db, db_sup]},
    {applications, [kernel, stdlib]},
-   {mod,          {db_sup, []}}
+   {mod,          {backend, []}}
   ]}.
