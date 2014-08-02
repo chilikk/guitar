@@ -22,11 +22,13 @@ start_link() ->
 init(_) ->
     {ok, ?SONGDB} = dets:open_file(?SONGDB, [{file, ?SONGDBFILE}]),
     {ok, ?CHORDDB} = dets:open_file(?CHORDDB, [{file, ?CHORDDBFILE}]),
+    error_logger:info_msg("starting db~n", []),
     {ok, []}.
 
-terminate(_, _) ->
+terminate(Reason, _) ->
     ok = dets:close(?SONGDB),
     ok = dets:close(?CHORDDB),
+    error_logger:info_msg("stopping db because of: ~p~n", [Reason]),
     ok.
 
 handle_call({save_text, Song}, _From, State) ->

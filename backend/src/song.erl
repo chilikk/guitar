@@ -37,12 +37,14 @@ escape(Text) ->
     yaws_api:url_encode(lists:flatten(yaws_api:f("~s", [Text]))).
 
 get_title(Author, Title) ->
-    case {Author, Title} of
+    lists:flatten(
+      case {Author, Title} of
         {unknown, unknown} -> "";
         {unknown, _} -> io_lib:format("~s", [Title]);
         {"unknown", _} -> io_lib:format("~s", [Title]);
         {_, _} -> io_lib:format("~s - ~s", [Author, Title])
-    end.
+      end
+    ).
 
 get_text(Author, Title) ->
     ?DB:get_text(Author, Title).
@@ -57,7 +59,7 @@ delete(Author, Title) ->
     ?DB:delete_song(Author, Title).
 
 save(Author, Title, Text) ->
-    ?DB:save_song(Author, Title, Text).
+    ?DB:save_text(Author, Title, Text).
 
 fetch_chords(Text) ->
     ChordPattern = "[A-H][#b]?(?:maj7|m7b5|maj9|add9|sus2|sus4|dim7|7b5|7#5|"
