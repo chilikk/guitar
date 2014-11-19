@@ -7,22 +7,22 @@ out(Req) ->
 <head>
 	<title>Denys' song database</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
-	<link rel="stylesheet" type="text/css" href="/css/bootstrap-theme.min.css" />
-	<link rel="stylesheet" type="text/css" href="/css/style.css" />
-	<link rel="stylesheet" type="text/css" href="/css/admin-style.css" />
-	<script type="text/javascript" src="/js/jquery-1.10.2.js"></script>
-	<script type="text/javascript" src="/js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="/js/raphael.js"></script>
-	<script type="text/javascript" src="/js/jtab.js"></script>
-	<script type="text/javascript" src="/js/display.js"></script>
-	<script type="text/javascript" src="/js/admin.js"></script>
+	<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css" />
+	<link rel="stylesheet" type="text/css" href="../css/bootstrap-theme.min.css" />
+	<link rel="stylesheet" type="text/css" href="../css/style.css" />
+	<link rel="stylesheet" type="text/css" href="../css/admin-style.css" />
+	<script type="text/javascript" src="../js/jquery-1.10.2.js"></script>
+	<script type="text/javascript" src="../js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="../js/raphael.js"></script>
+	<script type="text/javascript" src="../js/jtab.js"></script>
+	<script type="text/javascript" src="../js/display.js"></script>
+	<script type="text/javascript" src="../js/admin.js"></script>
 </head>
 <body>
 	<div id='outwrapper' class='container'>
 		<div class='navbar navbar-default'>
 			<div class='container'>
-				<a class='navbar-brand' href='/'>Denys' song database</a>
+				<a class='navbar-brand' href='..'>Denys' song database</a>
 				<button type='button' class='btn btn-default pull-right' style='margin:7px' onclick='edit_song("")'>Add a new song</button>
 			</div>
 		</div>
@@ -37,7 +37,7 @@ out(Req) ->
 			</div>
 			<div id='content' class='col-lg-8 col-md-8 col-sm-8 col-xs-8'>
 				<erl>
-				out(Req) -> {yssi, "/admin/edit.yaws"}.
+				out(Req) -> {yssi, "edit.yaws"}.
 				</erl>
 			</div>
 		</div>

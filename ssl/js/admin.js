@@ -1,5 +1,5 @@
 function edit_song(urlGetQuery) {
-	$.get("/admin/edit.yaws"+urlGetQuery,
+	$.get("edit.yaws"+urlGetQuery,
 	function(msg) {
 		$('#content').html(msg);
                 textarea = $('#edittext');
@@ -11,7 +11,7 @@ function edit_song(urlGetQuery) {
 }
 
 function new_song() {
-	$.get("/admin/edit.yaws",
+	$.get("edit.yaws",
 		function(msg) {
 			$('#content').html(msg);
 			textarea = $('#edittext');
@@ -22,7 +22,7 @@ function new_song() {
 }
 
 function save_song() {
-	$.post("/admin/operation.yaws", 
+	$.post("operation.yaws", 
 		{ 	
 			op : 'save',
 			a : $('#editauthor').text(),
@@ -37,7 +37,7 @@ function save_song() {
 
 function delete_song() {
 	if (confirm("Are you sure you want to delete '"+$('#editauthor').html()+" :: "+$('#edittitle').html()+"'?")) {
-		$.post("/admin/operation.yaws",
+		$.post("operation.yaws",
 			{
 				op: 'delete',
 				a : $('#editauthor').text(),

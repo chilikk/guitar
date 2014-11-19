@@ -16,7 +16,7 @@ function toggle_chords() {
 
 function load_song(urlGetQuery) {
 	var current = $('#activesong');
-	$.get("/song.yaws"+urlGetQuery, 
+	$.get("song.yaws"+urlGetQuery, 
 		function(msg) {
 			$('#content').html(msg);
 			if ($('#chords')[0]) {
