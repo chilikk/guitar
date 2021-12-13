@@ -1,18 +1,29 @@
--module(db).
--vsn("2.0").
+-module(guitar_db).
 -behaviour(gen_server).
-
--include("song.hrl").
--include("db.hrl").
 
 -export([init/1, terminate/2,
          handle_call/3, handle_info/2, handle_cast/2,
          code_change/3]).
 
--export([start_link/0, save_text/3, get_text/2,
-                       save_chords/3, get_chords/2,
-                       get_keys/0,
-                       delete_song/2]).
+-export([start_link/0]).
+
+-export([save_text/3, get_text/2,
+         save_chords/3, get_chords/2,
+         get_keys/0,
+         delete_song/2]).
+
+-define(DB_DIR, filename:join(code:priv_dir(guitar), "db")).
+-define(SONGDB_FILE, filename:join(?DB_DIR, "song.db")).
+-define(CHORDDB_FILE, filename:join(?DB_DIR, "chord.db")).
+
+-define(SONGDB, songdb).
+-define(CHORDDB, chorddb).
+
+-record(song, {author :: binary(),
+               title  :: binary(),
+               text   :: binary(),
+               chords :: [string()]
+              }).
 
 %% gen_server exports
 
@@ -20,8 +31,8 @@ start_link() ->
     gen_server:start_link({local, ?MODULE}, ?MODULE, [], []).
 
 init(_) ->
-    {ok, ?SONGDB} = dets:open_file(?SONGDB, [{file, ?SONGDBFILE}]),
-    {ok, ?CHORDDB} = dets:open_file(?CHORDDB, [{file, ?CHORDDBFILE}]),
+    {ok, ?SONGDB} = dets:open_file(?SONGDB, [{file, ?SONGDB_FILE}]),
+    {ok, ?CHORDDB} = dets:open_file(?CHORDDB, [{file, ?CHORDDB_FILE}]),
     error_logger:info_msg("starting db~n", []),
     {ok, []}.
 
@@ -123,6 +134,8 @@ toBinary("") ->
 toBinary(<<>>) ->
     unknown;
 toBinary("unknown") ->
+    unknown;
+toBinary(<<"unknown">>) ->
     unknown;
 toBinary(Value) when is_list(Value) ->
     try

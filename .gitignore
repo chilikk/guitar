@@ -1,5 +1,10 @@
 .eunit
 deps
+ebin
 *.o
+*.d
 *.beam
 *.plt
+_rel
+erlang.mk
+.erlang.mk

@@ -1,9 +1,9 @@
--module(song).
-
--include("song.hrl").
+-module(guitar_song).
 
 -export([html_list/1, show/2, delete/2, save/3,
          get_text/2, get_link/2, get_title/2]).
+
+-define(DB, guitar_db).
 
 html_list(Format) ->
     List = lists:sort(
@@ -30,18 +30,20 @@ html_list([{Author, Title} | List], Format, HtmlResult) ->
 html_list([], _, HtmlResult) ->
     HtmlResult.
 
+get_link(unknown, Title) ->
+    get_link("unknown", Title);
+get_link(Author, unknown) ->
+    get_link(Author, "unknown");
 get_link(Author, Title) ->
-    yaws_api:f("?a=~s&t=~s", [escape(Author), escape(Title)]).
-
-escape(Text) ->
-    yaws_api:url_encode(lists:flatten(yaws_api:f("~s", [Text]))).
+    [$? | cow_qs:qs([{<<"a">>, unicode:characters_to_binary(Author)},
+                     {<<"t">>, unicode:characters_to_binary(Title)}])].
 
 get_title(Author, Title) ->
     lists:flatten(
       case {Author, Title} of
         {unknown, unknown} -> "";
         {unknown, _} -> io_lib:format("~s", [Title]);
-        {"unknown", _} -> io_lib:format("~s", [Title]);
+        {<<"unknown">>, _} -> io_lib:format("~s", [Title]);
         {_, _} -> io_lib:format("~s - ~s", [Author, Title])
       end
     ).
