@@ -12,9 +12,8 @@
          get_keys/0,
          delete_song/2]).
 
--define(DB_DIR, filename:join(code:priv_dir(guitar), "db")).
--define(SONGDB_FILE, filename:join(?DB_DIR, "song.db")).
--define(CHORDDB_FILE, filename:join(?DB_DIR, "chord.db")).
+-define(SONGDB_FILE(DBDir), filename:join(DBDir, "song.db")).
+-define(CHORDDB_FILE(DBDir), filename:join(DBDir, "chord.db")).
 
 -define(SONGDB, songdb).
 -define(CHORDDB, chorddb).
@@ -31,10 +30,17 @@ start_link() ->
     gen_server:start_link({local, ?MODULE}, ?MODULE, [], []).
 
 init(_) ->
-    {ok, ?SONGDB} = dets:open_file(?SONGDB, [{file, ?SONGDB_FILE}]),
-    {ok, ?CHORDDB} = dets:open_file(?CHORDDB, [{file, ?CHORDDB_FILE}]),
-    error_logger:info_msg("starting db~n", []),
-    {ok, []}.
+    case os:getenv("DB_DIR") of
+        false ->
+            {stop, no_db_dir};
+        DBDir ->
+            {ok, ?SONGDB} = dets:open_file(
+                              ?SONGDB, [{file, ?SONGDB_FILE(DBDir)}]),
+            {ok, ?CHORDDB} = dets:open_file(
+                               ?CHORDDB, [{file, ?CHORDDB_FILE(DBDir)}]),
+            error_logger:info_msg("starting db~n", []),
+            {ok, []}
+    end.
 
 terminate(Reason, _) ->
     ok = dets:close(?SONGDB),
