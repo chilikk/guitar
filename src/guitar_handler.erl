@@ -86,8 +86,8 @@ head() ->
 
 admin_head() ->
     Admin = <<"<link rel='stylesheet' type='text/css' "
-              "href='../css/admin-style.css' />\n  "
-              "<script type='text/javascript' src='../js/admin.js'>"
+              "href='css/admin-style.css' />\n  "
+              "<script type='text/javascript' src='js/admin.js'>"
               "</script>\n">>,
     head(Admin).
 
@@ -129,7 +129,7 @@ header() ->
 admin_header() ->
     <<"<div class='navbar navbar-default'>
       <div class='container'>
-        <a class='navbar-brand' href='..'>Denys' song database</a>
+        <a class='navbar-brand' href='.'>Denys' song database</a>
         <button type='button' class='btn btn-default pull-right' "
         "style='margin:7px' onclick='edit_song(\"\")'>Add a new song</button>
       </div>
